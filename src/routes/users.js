@@ -100,7 +100,7 @@ router.delete("/users/:id", async (req, res) => {
     }
   });
   //////////////////////////Ruta PUT para actualizar un usuario por ID////////////////////////////////////////
-router.put("/users/:id",upload.single("foto_documento"), async (req, res) => {
+router.put("/users/:id", async (req, res) => {
     const userId = req.params.id;
     const {
         nombreApellidos,
@@ -141,3 +141,5 @@ router.put("/users/:id",upload.single("foto_documento"), async (req, res) => {
       res.status(500).json({ message: "Error al actualizar usuario" });
     }
   });
+
+  module.exports = router;

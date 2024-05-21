@@ -86,5 +86,17 @@ const pacientes = sequelize.define('pacientes', {
         allowNull: false
     },
 
-    // ///////
+    // ///////Datos Al Egreso////
+    ResultadoalAlta: {
+        type: DataTypes.ENUM('Vivo', 'Muerto',),
+        allowNull: false
+      },
+      FechadeAlta: {
+        type: DataTypes.DATEONLY,
+        allowNull: false
+      },
+      DiagnosticoAlEgreso: {
+        type: DataTypes.TEXT,
+        allowNull: false
+      },
 })

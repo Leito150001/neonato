@@ -1,4 +1,4 @@
-/* const { database_mysql } = require('./keys'); // Asegúrate de que esto esté importando tus credenciales de base de datos correctamente
+const { database_mysql } = require('./keys'); // Asegúrate de que esto esté importando tus credenciales de base de datos correctamente
 const { Sequelize } = require('sequelize');
 
 // Inicializar una nueva instancia de Sequelize
@@ -17,4 +17,4 @@ sequelize.authenticate()
     console.error('Error al conectarse a la base de datos MySQL:', err);
   });
 
-module.exports = sequelize; */
+module.exports = sequelize;

@@ -1,4 +1,4 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, BelongsTo } = require('sequelize');
 const sequelize = require('../src/database');
 
 
@@ -30,5 +30,7 @@ const Reintervencion = sequelize.define('reintervencion', {
 
 })
 
-mnodule
+Reintervencion.belongsTo(Pacientes, { foreignKey: 'pacienteid', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+
+module.exports= Reintervencion;
 
