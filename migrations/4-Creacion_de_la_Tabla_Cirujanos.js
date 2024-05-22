@@ -10,15 +10,15 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       nombreApellidos: {
-        type: DataTypes.STRING(255),
+        type: Sequelize.STRING(255),
         allowNull: false
       },
     DoctorId :{
-        type:DataTypes.INTEGER,
+        type:Sequelize.INTEGER,
         allowNull:false
     },
     Especializcion: {
-        type: DataTypes.STRING(255),
+        type: Sequelize.STRING(255),
         allowNull: true
       },
      

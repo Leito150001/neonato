@@ -23,6 +23,7 @@ app.use((req, res, next) => {
 ///Routes
 app.use(require("./routes"));
 app.use(require("./routes/users"));
+app.use(require("./routes/pacientes"));
 
 
 //start the server

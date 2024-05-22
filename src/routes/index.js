@@ -7,8 +7,10 @@ const multer = require('multer');
 
 
 const usersRouter = require('./users');
+const pacienteRouter = require('./pacientes');
 
 
 router.use('/users', usersRouter);
+router.use('/pacientes', pacienteRouter);
 
 module.exports = router;
