@@ -1,5 +1,8 @@
-/* database_mysql:{
-    host: "localhost",
-    user: "root",
-    database: "neonato"
-  } */
+module.exports= {
+  database_mysql:{
+  host: "localhost",
+  user: "root",
+  database: "neonato"}
+    
+};
+  

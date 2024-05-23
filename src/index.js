@@ -1,7 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
-const routes = require('./routes');
+/* const routes = require('./routes'); */
 
 // initialitazion
 const app = express();
@@ -21,6 +21,11 @@ app.use((req, res, next) => {
 });
 
 ///Routes
+app.use(require("./routes"));
+app.use(require("./routes/users"));
+app.use(require("./routes/pacientes"));
+app.use(require("./routes/cirujanos"));
+app.use(require("./routes/login"));
 
 
 //start the server

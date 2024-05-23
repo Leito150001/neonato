@@ -1,34 +1,33 @@
-const {DataTypes} = require('sequelize');
+const { DataTypes } = require('sequelize');
 const sequelize = require('../src/database');
 
-const pacientes = sequelize.define('pacientes', {
-    // Identificacion////
+const Paciente = sequelize.define('Paciente', {
     nombre: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.STRING,
         allowNull: false
     },
     apellidos: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.STRING,
         allowNull: false
     },
     CarnetdelaMadre: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.STRING,
         allowNull: false
     },
     telefono: {
-        type: DataTypes.STRING(20),
+        type: DataTypes.STRING,
         allowNull: false
     },
     Direccion: {
-        type: DataTypes.STRING(20),
+        type: DataTypes.STRING,
         allowNull: false
     },
     Provincia: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.STRING,
         allowNull: false
     },
     Municipio: {
-        type: DataTypes.STRING(20),
+        type: DataTypes.STRING,
         allowNull: false
     },
     FechadeIngreso: {
@@ -47,7 +46,6 @@ const pacientes = sequelize.define('pacientes', {
         type: DataTypes.TEXT,
         allowNull: false
     },
-    // ///Traslado////
     CoincidenciaDiagnositica: {
         type: DataTypes.TEXT,
         allowNull: false
@@ -64,27 +62,30 @@ const pacientes = sequelize.define('pacientes', {
         type: DataTypes.TEXT,
         allowNull: false
     },
-    // //Operacion////
-    VentilacionPreoperatoria: {
-        type: DataTypes.BOOLEAN,
+    ResultadoalAlta: {
+        type: DataTypes.ENUM('Vivo', 'Muerto'),
         allowNull: false
     },
-    FechadeOperacion: {
+    FechadeAlta: {
         type: DataTypes.DATEONLY,
         allowNull: false
     },
-    NombredeOperacion: {
-        type: DataTypes.STRING(255),
+    DiagnosticoAlEgreso: {
+        type: DataTypes.TEXT,
         allowNull: false
     },
-    CirujanoPrincipal: {
-        type: DataTypes.STRING(255),
-        allowNull: false
-    },
-    DiasVentilacionPreoperatoria: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
+}, {
+    sequelize,
+    modelName: 'Paciente',
+    tableName: 'Paciente',
+    timestamps: true,
+});
 
-    // ///////
-})
+Paciente.associate = function(models) {
+    Paciente.hasMany(models.Operacion, {
+        foreignKey: 'pacienteId',
+        as: 'operaciones'
+    });
+};
+
+module.exports = Paciente;
