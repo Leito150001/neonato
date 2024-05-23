@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Pacientes', {
+    await queryInterface.createTable('Paciente', {
       id: {
         allowNull: false,
         autoIncrement: true,

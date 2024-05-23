@@ -1,5 +1,8 @@
-'use strict';
-module.exports = (sequelize, DataTypes) => {
+const { DataTypes } = require('sequelize');
+const sequelize = require('../src/database');
+
+
+
   const Paciente = sequelize.define('Paciente', {
     nombre: {
       type: DataTypes.STRING,
@@ -72,8 +75,13 @@ module.exports = (sequelize, DataTypes) => {
     DiagnosticoAlEgreso: {
       type: DataTypes.TEXT,
       allowNull: false
-    }
-  }, {});
+    },
+  }, {
+    sequelize,
+    modelName: 'Paciente',
+    tableName: 'Paciente',
+    timestamps: true,
+  });
 
   Paciente.associate = function(models) {
     Paciente.hasMany(models.Operacion, {
@@ -81,6 +89,9 @@ module.exports = (sequelize, DataTypes) => {
       as: 'operaciones'
     });
   };
+  
 
   return Paciente;
-};
+  
+module.exports = Paciente
+
