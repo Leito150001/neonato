@@ -1,4 +1,4 @@
-sequelize = require('../src/database');
+sequelize = require ('../src/database');
 const Cirujanos = require('./Cirujanos');
 const Operacion = require('./Operacion');
 const paciente = require('./Paciente');

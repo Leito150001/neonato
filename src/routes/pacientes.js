@@ -1,11 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const Paciente = require("../../models/Paciente"); // Asegúrate de que las rutas y nombres sean correctos
+const Paciente = require("../../models/Paciente");
 const Operacion = require("../../models/Operacion");
+const VerifyToken = require("../middlewares/Verifytoken")
+const isAdmin = require("../middlewares/isAdmin")
 
 
 // Ruta GET para obtener todos los pacientes
-router.get("/pacientes", async (req, res) => {
+router.get("/pacientes",VerifyToken,isAdmin , async (req, res) => {
     try {
         const pacientes = await Paciente.findAll();
         res.json(pacientes);
@@ -16,7 +18,7 @@ router.get("/pacientes", async (req, res) => {
 });
 
 // Ruta GET para obtener un paciente por ID
-router.get("/pacientes/:id", async (req, res) => {
+router.get("/pacientes/:id",VerifyToken, async (req, res) => {
     const pacienteId = req.params.id;
     try {
         const paciente = await Paciente.findByPk(pacienteId, {
