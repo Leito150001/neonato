@@ -4,10 +4,11 @@ const Paciente = require("../../models/Paciente");
 const Operacion = require("../../models/Operacion");
 const VerifyToken = require("../middlewares/Verifytoken")
 const isAdmin = require("../middlewares/isAdmin")
+const logMiddleware = require("../middlewares/logs")
 
 
 // Ruta GET para obtener todos los pacientes
-router.get("/pacientes",VerifyToken,isAdmin , async (req, res) => {
+router.get("/pacientes",VerifyToken, logMiddleware ,async (req, res) => {
     try {
         const pacientes = await Paciente.findAll();
         res.json(pacientes);
@@ -18,7 +19,7 @@ router.get("/pacientes",VerifyToken,isAdmin , async (req, res) => {
 });
 
 // Ruta GET para obtener un paciente por ID
-router.get("/pacientes/:id",VerifyToken, async (req, res) => {
+router.get("/pacientes/:id",VerifyToken,logMiddleware, async (req, res) => {
     const pacienteId = req.params.id;
     try {
         const paciente = await Paciente.findByPk(pacienteId, {
@@ -35,7 +36,7 @@ router.get("/pacientes/:id",VerifyToken, async (req, res) => {
 });
 
 // Ruta POST para crear un nuevo paciente y añadir operaciones
-router.post("/pacientes", async (req, res) => {
+router.post("/pacientes",VerifyToken,logMiddleware, async (req, res) => {
     const {
         nombre,
         apellidos,
@@ -98,7 +99,7 @@ router.post("/pacientes", async (req, res) => {
 });
 
 // Ruta PUT para actualizar un paciente y sus operaciones
-router.put("/pacientes/:id", async (req, res) => {
+router.put("/pacientes/:id",VerifyToken,logMiddleware, async (req, res) => {
     const pacienteId = req.params.id;
     const {
         nombre,
@@ -170,7 +171,7 @@ router.put("/pacientes/:id", async (req, res) => {
 });
 
 // Ruta DELETE para eliminar un paciente y sus operaciones
-router.delete("/pacientes/:id", async (req, res) => {
+router.delete("/pacientes/:id",VerifyToken,logMiddleware, async (req, res) => {
     const pacienteId = req.params.id;
     try {
         const paciente = await Paciente.findByPk(pacienteId);
