@@ -7,7 +7,7 @@ const router = express.Router();
 
 // Ruta para iniciar sesión
 router.post('/login', async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password,  } = req.body;
 
   try {
     // Buscar al usuario por nombre de usuario
@@ -23,9 +23,10 @@ router.post('/login', async (req, res) => {
     }
 
     // Generar el token de autenticación
-    const token = jwt.sign({ userId: user.id, username: user.username }, '1234', { expiresIn: '1h' });
+    const token = jwt.sign({ userId: user.id, username: user.username, isAdmin: user.isAdmin }, '1234', { expiresIn: '1h' });
+    
 
-    res.status(200).json({ token });
+    res.status(200).json({token,username, isAdmin: user.isAdmin });
   } catch (error) {
     console.error('Error al iniciar sesión:', error);
     res.status(500).json({ message: 'Error al iniciar sesión' });
