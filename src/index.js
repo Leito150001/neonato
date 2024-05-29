@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
 const routes = require('./routes'); 
+const cors = require('cors'); // Asegúrate de agregar esta línea
 
 // initialitazion
 const app = express();
@@ -14,6 +15,9 @@ app.set("port", process.env.PORT || 4000);
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(cors({
+  origin: 'http://localhost:5173'
+}));
 
 //Globla Variables
 app.use((req, res, next) => {
@@ -23,7 +27,7 @@ app.use((req, res, next) => {
 ///Routes
 app.use(require("./routes"));
 app.use(require("./routes/users"));
-app.use(require("./routes/pacientes"));
+app.use(require("./routes/pacientes")); 
 app.use(require("./routes/cirujanos"));
 app.use(require("./routes/login"));
 app.use(require("./routes/graphresulaltas"));
