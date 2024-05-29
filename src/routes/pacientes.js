@@ -2,16 +2,27 @@ const express = require("express");
 const router = express.Router();
 const Paciente = require("../../models/Paciente");
 const Operacion = require("../../models/Operacion");
-const VerifyToken = require("../middlewares/Verifytoken")
-const isAdmin = require("../middlewares/isAdmin")
-const logMiddleware = require("../middlewares/logs")
-
+const VerifyToken = require("../middlewares/Verifytoken");
+const logMiddleware = require("../middlewares/logs");
 
 // Ruta GET para obtener todos los pacientes
-router.get("/pacientes",VerifyToken, logMiddleware ,async (req, res) => {
+router.get("/pacientes", VerifyToken, logMiddleware, async (req, res) => {
     try {
         const pacientes = await Paciente.findAll();
-        res.json(pacientes);
+
+        // Obtenemos todas las operaciones
+        const operaciones = await Operacion.findAll();
+
+        // Asociamos las operaciones a los pacientes correspondientes
+        const pacientesConOperaciones = pacientes.map(paciente => {
+            const operacionesPaciente = operaciones.filter(operacion => operacion.pacienteId === paciente.id);
+            return {
+                ...paciente.dataValues,
+                operaciones: operacionesPaciente
+            };
+        });
+
+        res.json(pacientesConOperaciones);
     } catch (error) {
         console.error("Error al obtener pacientes:", error);
         res.status(500).json({ message: "Error al obtener pacientes" });
@@ -19,16 +30,26 @@ router.get("/pacientes",VerifyToken, logMiddleware ,async (req, res) => {
 });
 
 // Ruta GET para obtener un paciente por ID
-router.get("/pacientes/:id",VerifyToken,logMiddleware, async (req, res) => {
+router.get("/pacientes/:id", VerifyToken, logMiddleware, async (req, res) => {
     const pacienteId = req.params.id;
     try {
-        const paciente = await Paciente.findByPk(pacienteId, {
-            include: { model: Operacion, as: 'operaciones' } // Incluye las operaciones relacionadas
-        });
+        const paciente = await Paciente.findByPk(pacienteId);
+
         if (!paciente) {
             return res.status(404).json({ message: "Paciente no encontrado" });
         }
-        res.status(200).json(paciente);
+
+        // Obtenemos las operaciones del paciente
+        const operaciones = await Operacion.findAll({
+            where: { pacienteId: paciente.id }
+        });
+
+        const pacienteConOperaciones = {
+            ...paciente.dataValues,
+            operaciones: operaciones
+        };
+
+        res.status(200).json(pacienteConOperaciones);
     } catch (error) {
         console.error("Error al obtener paciente:", error);
         res.status(500).json({ message: "Error al obtener paciente" });
